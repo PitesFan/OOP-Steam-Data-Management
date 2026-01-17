@@ -31,6 +31,10 @@ public:
         accountType = true;
     }
 
+    ~Steam() {
+        cout << "Obiectul a fost distrus."<<endl;
+    }
+
     void displayInfo() {
         cout << "Username: " << name << endl;
         cout << "Email: " << email << endl;
