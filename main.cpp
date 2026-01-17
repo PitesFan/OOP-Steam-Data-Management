@@ -19,7 +19,7 @@ public:
         password = "Not set";
         level = 0;
         accountType = true;
-        balance = 0.0;
+        balance = 0;
     }
 
     Steam(string Name, string Email, string Password) {
@@ -32,7 +32,14 @@ public:
     }
 
     ~Steam() {
-        cout << "Obiectul a fost distrus."<<endl;
+        cout << "Obiectul a fost distrus." << endl;
+    }
+
+    Steam(const Steam &obj) {
+        name = obj.name;
+        accountType = obj.accountType;
+        level = 0;
+        balance = 0;
     }
 
     void displayInfo() {
@@ -42,32 +49,32 @@ public:
         cout << "Balance: " << balance << " $" << endl;
         cout << "Level: " << level << endl;
         if (accountType) {
-            cout << "Account Type: public" << endl<<endl;
-        } else { cout << "Account Type: private" << endl<<endl; }
+            cout << "Account Type: public" << endl << endl;
+        } else { cout << "Account Type: private" << endl << endl; }
     }
 
     void changeAccountType() {
-        bool AccountType;
         int n;
-            cout<<"Alege tipul contului: "<<endl;
-            cout<<"1. Cont public"<<endl;
-            cout<<"2. Cont privat"<<endl;
-            cout<<"0. Iesire"<<endl;
-            cin>>n;
+        cout << "Alege tipul contului: " << endl;
+        cout << "1. Cont public" << endl;
+        cout << "2. Cont privat" << endl;
+        cout << "0. Iesire" << endl;
+        cin >> n;
 
-            switch (n) {
-                case 0: break;
-                case 1: AccountType = true; break;
-                case 2: AccountType = false; break;
-                default: cout<<"Numar introdus incorect"<<endl;;
-            }
-        accountType = AccountType;
+        switch (n) {
+            case 0: break;
+            case 1: accountType = true;
+                break;
+            case 2: accountType = false;
+                break;
+            default: cout << "Numar introdus incorect" << endl;;
+        }
     }
 
     void addBalance() {
         float Balance;
-        cout<<"Introduceti o suma in cont: ";
-        cin>>Balance;
+        cout << "Introduceti o suma in cont: ";
+        cin >> Balance;
         if (Balance > 0)
             balance += Balance;
     }
@@ -78,25 +85,32 @@ public:
 
     void changeEmail() {
         string NewEmail;
-        cout<<"Introduceti noua adresa de email: ";
-        cin>>NewEmail;
+        cout << "Introduceti noua adresa de email: ";
+        cin >> NewEmail;
         email = NewEmail;
+    }
+
+    void changePassword() {
+        string NewPassword;
+        cout << "Introduceti noua parola: ";
+        cin >> NewPassword;
+        password = NewPassword;
     }
 };
 
 int main() {
-
     Steam account1("PitesFan", "pitesfan@gmail.com", "12345678");
 
-    int n;
-    while (n!=0) {
+    int n = 1;
+    while (n != 0) {
         cout << "Aplica modificari contului: " << endl;
         cout << "1. Afiseaza datele contului: " << endl;
         cout << "2. Schimba tipul contului: " << endl;
         cout << "3. Adauga bani in cont: " << endl;
         cout << "4. Creste nivelul: " << endl;
         cout << "5. Schimba adresa de email: " << endl;
-        cout<<"0. Iesire: "<<endl;
+        cout << "6. Schimba adresa parola: " << endl;
+        cout << "0. Iesire: " << endl;
 
         cin >> n;
 
@@ -112,9 +126,17 @@ int main() {
                 break;
             case 5: account1.changeEmail();
                 break;
-            default: cout<<"Numar introdus incorect"<<endl;
+            case 6: account1.changePassword();
+                break;
+            default: cout << "Numar introdus incorect" << endl;
         }
     }
+
+    Steam account2(account1);
+    cout <<"Se creeaza o copie a contului: "<< endl;
+    account2.changeEmail();
+    account2.changePassword();
+    account2.displayInfo();
 
     return 0;
 }
